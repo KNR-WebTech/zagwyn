@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
-import { Placeholder } from "@/components/Placeholder";
 import { SectionHeading } from "@/components/SectionHeading";
 import { PhoneCTA } from "@/components/PhoneCTA";
 import { testimonials } from "@/content/testimonials";
 import { products } from "@/content/products";
+import { images } from "@/content/images";
 
 export const metadata = pageMetadata({
   title: "Zagwyn Firewood",
@@ -27,16 +27,17 @@ export default function HomePage() {
 
 function Hero() {
   return (
-    <section className="relative bg-charcoal text-offwhite overflow-hidden">
+    <section className="relative bg-charcoal text-offwhite overflow-hidden min-h-[72vh] sm:min-h-[80vh] flex items-center">
       <div className="absolute inset-0">
-        <Placeholder
-          label="Hero background — looping 10-second clip of processor splitting hardwood → conveyor → dump truck"
-          aspect="wide"
-          className="h-full w-full"
+        <img
+          src={images.hero}
+          alt="Firewood logs stacked and ready for delivery"
+          className="w-full h-full object-cover"
+          loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/90 via-charcoal/70 to-charcoal/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/92 via-charcoal/75 to-charcoal/20" />
       </div>
-      <div className="relative container-wide py-14 sm:py-20 md:py-32">
+      <div className="relative container-wide py-14 sm:py-20 md:py-32 w-full">
         <div className="max-w-2xl animate-fade-up">
           <div className="eyebrow mb-4">Shirley, Massachusetts</div>
           <h1 className="font-serif text-4xl md:text-6xl leading-[1.05]">
@@ -115,6 +116,7 @@ function ValueColumns() {
         <div className="mt-10 sm:mt-14 grid gap-10 sm:gap-12 md:grid-cols-3">
           {items.map((item) => (
             <div key={item.title} className="animate-fade-up">
+              <div className="rule mb-6" />
               <svg
                 width="28"
                 height="28"
@@ -152,30 +154,50 @@ function ProductQuickSelect() {
           tone="dark"
         />
         <div className="mt-10 sm:mt-14 grid gap-6 sm:gap-8 sm:grid-cols-2 md:grid-cols-3">
-          {products.map((p) => (
-            <Link
-              key={p.slug}
-              href={`/products#${p.slug}`}
-              className="group block border border-offwhite/15 hover:border-amber transition-all duration-200 hover:-translate-y-1"
-            >
-              <Placeholder
-                label={`Real photo: ${p.name.toLowerCase()} stacked and ready to deliver`}
-                aspect="square"
-                tone="dark"
-              />
-              <div className="p-5 sm:p-6">
-                {p.badge && (
-                  <div className="eyebrow mb-2">{p.badge}</div>
-                )}
-                <h3 className="font-serif text-xl sm:text-2xl group-hover:text-amber transition-colors">
-                  {p.name}
-                </h3>
-                <p className="mt-2 text-sm text-offwhite/70">
-                  {p.shortDescription}
-                </p>
-              </div>
-            </Link>
-          ))}
+          {products.map((p) => {
+            const isFlagship = p.slug === "kiln-dried";
+            const photo = images.products[p.slug === "kiln-dried" ? "kilnDried" : p.slug === "seasoned" ? "seasoned" : "green"];
+            return (
+              <Link
+                key={p.slug}
+                href={`/products#${p.slug}`}
+                className={`group block transition-all duration-200 hover:-translate-y-1 ${
+                  isFlagship
+                    ? "border-2 border-amber/70 hover:border-amber"
+                    : "border border-offwhite/15 hover:border-amber/50"
+                }`}
+              >
+                <div className="relative aspect-square overflow-hidden">
+                  <img
+                    src={photo}
+                    alt={`${p.name} — hardwood firewood`}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  {isFlagship && (
+                    <div className="absolute top-3 left-3 bg-amber text-charcoal text-[10px] font-bold uppercase tracking-[0.18em] px-2.5 py-1">
+                      Most Popular
+                    </div>
+                  )}
+                </div>
+                <div className="p-5 sm:p-6">
+                  {p.badge && !isFlagship && (
+                    <div className="eyebrow mb-2">{p.badge}</div>
+                  )}
+                  <h3
+                    className={`font-serif group-hover:text-amber transition-colors ${
+                      isFlagship ? "text-2xl sm:text-3xl" : "text-xl sm:text-2xl"
+                    }`}
+                  >
+                    {p.name}
+                  </h3>
+                  <p className="mt-2 text-sm text-offwhite/70">
+                    {p.shortDescription}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -213,7 +235,7 @@ function SocialProof() {
 
 function CtaBanner() {
   return (
-    <section className="bg-amber text-charcoal">
+    <section className="bg-amber text-charcoal relative grain overflow-hidden">
       <div className="container-wide py-10 sm:py-14 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div>
           <h2 className="font-serif text-2xl md:text-3xl">

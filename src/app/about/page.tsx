@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
-import { Placeholder } from "@/components/Placeholder";
 import { SectionHeading } from "@/components/SectionHeading";
 import { PhoneCTA } from "@/components/PhoneCTA";
 import { DeliveryMap } from "@/components/DeliveryMap";
 import { ZipChecker } from "@/components/ZipChecker";
 import { deliveryZones, allServicedTowns } from "@/content/towns";
+import { images } from "@/content/images";
 
 export const metadata = pageMetadata({
   title: "About Zagwyn Firewood",
@@ -21,12 +21,14 @@ export default function AboutPage() {
       <section className="bg-offwhite">
         <div className="container-wide py-14 sm:py-20 md:py-28">
           <div className="grid gap-10 sm:gap-14 md:grid-cols-[1fr_1.2fr] items-start">
-            <Placeholder
-              label="Alex and David Zagwyn in the yard — wide shot, real working clothes"
-              aspect="portrait"
-              tone="light"
-              className="order-2 md:order-1"
-            />
+            <div className="relative order-2 md:order-1 aspect-[3/4] overflow-hidden">
+              <img
+                src={images.about.portrait}
+                alt="Zagwyn Firewood operations — hands-on crew in central Massachusetts"
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
             <div className="order-1 md:order-2 animate-fade-up">
               <div className="eyebrow mb-3">About The Zagwyns</div>
               <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl text-charcoal leading-[1.1]">
@@ -78,28 +80,32 @@ export default function AboutPage() {
               number="01"
               title="Skid Steers"
               body="Our skid steers handle every load that moves through the yard. They keep the raw logs organized, feed the processor without downtime, and load the delivery trucks cleanly. Just as important: they keep wood off the ground and out of the mud, which is a big part of why our splits show up clean."
-              photoLabel="Real photo: skid steer with grapple lifting hardwood logs onto processor deck"
+              photoSrc={images.equipment.skidSteer}
+              photoAlt="Heavy equipment loader moving logs in the Zagwyn yard"
               reverse={false}
             />
             <Equipment
               number="02"
               title="Firewood Processor"
               body="Our processor cross-cuts and splits every log to a standard 16 inches. It's a mechanical advantage that matters to you: uniform sizing, consistent volume per cord, and splits that fit any residential stove, insert, or fireplace without needing to be re-cut on your driveway."
-              photoLabel="Real photo: firewood processor splitting a log, close-up of wedge"
+              photoSrc={images.equipment.processor}
+              photoAlt="Split firewood logs processed to uniform 16-inch lengths"
               reverse
             />
             <Equipment
               number="03"
               title="Thermodynamic Kilns"
               body="Our kilns bake green wood down below 20% moisture in a matter of days instead of the six to twelve months it takes wood to air-season on its own. The heat also kills insects, mold, and fungus — which is why our kiln-dried wood is safe to store indoors. Kiln-dried lights faster, burns hotter, and produces less creosote."
-              photoLabel="Real photo: kiln exterior with steam venting at night"
+              photoSrc={images.equipment.kiln}
+              photoAlt="Kiln drying facility — heat treatment eliminates moisture and insects"
               reverse={false}
             />
             <Equipment
               number="04"
               title="Dump Truck Fleet"
               body="We run multiple trucks so we can deliver anything from a half-cord drop in a tight suburban driveway up to a four-cord bulk load for a rural property. One truck can run a multi-stop route along a single corridor, which keeps delivery fees reasonable for everyone."
-              photoLabel="Real photo: loaded dump truck at delivery site, body raised"
+              photoSrc={images.equipment.dumpTruck}
+              photoAlt="Dump truck delivering a load of firewood to a customer"
               reverse
             />
           </div>
@@ -243,20 +249,29 @@ function Equipment({
   number,
   title,
   body,
-  photoLabel,
+  photoSrc,
+  photoAlt,
   reverse,
 }: {
   number: string;
   title: string;
   body: string;
-  photoLabel: string;
+  photoSrc: string;
+  photoAlt: string;
   reverse: boolean;
 }) {
   return (
     <div
       className={`grid gap-8 sm:gap-10 md:grid-cols-2 items-center ${reverse ? "md:[&>*:first-child]:order-2" : ""}`}
     >
-      <Placeholder label={photoLabel} aspect="video" tone="dark" />
+      <div className="relative aspect-video overflow-hidden">
+        <img
+          src={photoSrc}
+          alt={photoAlt}
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
+      </div>
       <div>
         <div className="font-serif text-amber text-5xl sm:text-6xl md:text-7xl leading-none">
           {number}

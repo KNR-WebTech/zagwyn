@@ -27,7 +27,7 @@ export const site = {
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },
     { label: "Products & Pricing", href: "/products" },
-    { label: "Contact", href: "/contact" },
+{ label: "Contact", href: "/contact" },
   ],
 };
 

@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
-import { Placeholder } from "@/components/Placeholder";
 import { SectionHeading } from "@/components/SectionHeading";
 import { VolumeVisualizer } from "@/components/VolumeVisualizer";
 import { products, volumeLabels, type VolumeKey } from "@/content/products";
+import { images } from "@/content/images";
 
 export const metadata = pageMetadata({
   title: "Firewood Products & Pricing",
@@ -36,11 +36,20 @@ export default function ProductsPage() {
               id={product.slug}
               className="grid gap-8 sm:gap-10 md:grid-cols-[1fr_1.2fr] scroll-mt-28"
             >
-              <Placeholder
-                label={`Real photo: ${product.name.toLowerCase()}, close-up of split wood texture`}
-                aspect="square"
-                tone="light"
-              />
+              <div className="relative aspect-square overflow-hidden">
+                <img
+                  src={
+                    product.slug === "kiln-dried"
+                      ? images.products.kilnDried
+                      : product.slug === "seasoned"
+                      ? images.products.seasoned
+                      : images.products.green
+                  }
+                  alt={`${product.name} — split hardwood firewood from Zagwyn`}
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
               <div>
                 {product.badge && (
                   <div className="eyebrow mb-2">{product.badge}</div>
