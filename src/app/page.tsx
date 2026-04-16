@@ -35,7 +35,7 @@ function Hero() {
           className="w-full h-full object-cover"
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/92 via-charcoal/75 to-charcoal/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/95 via-charcoal/80 to-charcoal/30" />
       </div>
       <div className="relative container-wide py-14 sm:py-20 md:py-32 w-full">
         <div className="max-w-2xl animate-fade-up">
